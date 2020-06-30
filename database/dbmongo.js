@@ -1,17 +1,13 @@
-const mongoClient = require('mongodb').mongoClient
+const mongoClient = require('mongodb').MongoClient
 
-const url = 'mongo://localhost:27017'
+const url = 'mongodb://localhost:27017'
 
 mongoClient.connect(url)
-.then(conn => global.database = conn.db('clientes'))
+.then(conn => global.database = conn.db('aula_mongo01'))
 .catch(err => console.log(err))
 
-function getClientes(){
-    global.database.collection('clientes').find().toArray(
-        function(docs){
-            return docs
-        }
-    )
+function getClientes(callback){
+    global.database.collection('clientes').find({}).toArray(callback)
 }
 
 module.exports = { getClientes }

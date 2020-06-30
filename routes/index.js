@@ -4,10 +4,16 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) {
   const mongodb = require('../database/dbmongo')
-  const clientes = mongodb.getClientes()
-
-  res.render('index', { title: 'Express', clientes });
-  
+  mongodb.getClientes(
+    function(err, docs){
+      if(err){
+        res.render('index', { title: 'ERROR', clientes: [] });
+      }else{
+        res.render('index', { title: 'Express', clientes: docs });
+      }
+      
+    }
+  )  
 });
 
 module.exports = router;

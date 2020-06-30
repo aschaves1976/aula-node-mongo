@@ -7,7 +7,25 @@
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
-    <p><%= clientes.length()  %></p>
+    
+    <table>
+      <tr>
+          <td>NOME</td>
+          <td>IDADE</td>
+          <td>CIDADE</td>
+      </tr>
+        <% clientes.forEach(function(item){
+          %>
+          <tr>
+              <td><%= item.nome %></td>
+              <td><%= item.idade %></td>
+              <td><%= item.cidade %></td>
+          </tr>
+          <%
+        })  %>
+
+      </table>
+    <p></p>
     
   </body>
 </html>
