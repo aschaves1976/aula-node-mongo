@@ -24,16 +24,16 @@ router.get('/new', function(req, res, next){
 })
 
 /* POST - Tela de Novo Cadastro*/
-router.post('/new', function(req, res, next){
-  let nome = req.body.nome
-  let idade = parseInt(req.body.idade)
-  let cidade = req.body.cidade
+router.post('/new', function(request, response, next){
+  let nome = request.body.nome
+  let idade = parseInt(request.body.idade)
+  let cidade = request.body.cidade
 
-  mongodb.insertCliente({nome, idade, cidade}, (err, res)=>{
+  mongodb.insertCliente({nome, idade, cidade}, (err, result)=>{
     if (err){
       return console.log(`Erro no Cadastro do Novo Cliente - ${err}`)
     }
-    res.redirect('/')
+    response.redirect('/')
   })
 
 })
