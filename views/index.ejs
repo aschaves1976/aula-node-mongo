@@ -10,18 +10,22 @@
     
     <table>
       <tr style="background-color:aquamarine">
-          <td>NOME</td>
-          <td>IDADE</td>
-          <td>CIDADE</td>
-          <td>AÇÕES</td>
+          <td>Nome</td>
+          <td>Idade</td>
+          <td>Cidade</td>
+          <td>Excluir</td>
       </tr>
         <% clientes.forEach(function(item){
           %>
           <tr style="background-color:gainsboro">
-              <td><%= item.nome %></td>
+              <td> <a href ="/edit/<%= item._id %>" >
+                  <%= item.nome %>
+                </a> </td>
               <td><%= item.idade %></td>
               <td><%= item.cidade %></td>
-              <td></td>
+              <td> <a href ="/delete/<%= item._id %>"
+                onclick="return confirm('Tem certeza que deseja excluir?')"> Excluir
+              </a> </td>
           </tr>
           <%
         })  %>

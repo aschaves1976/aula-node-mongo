@@ -1,4 +1,9 @@
 const mongoClient = require('mongodb').MongoClient
+/** 
+ * objectId sera utilizado para converter os "_id" retornados
+ * da URL, pois estes virao como string e o Mongo não reconhece
+ * "_id" como String e sim como um ObjectId
+*/
 const objectId = require('mongodb').ObjectId
 
 const url = 'mongodb://localhost:27017'
@@ -19,16 +24,27 @@ function getClientes(callback){
     global.database.collection(customerCollection).find({}).toArray(callback)
 }
 
+function getOneCliente(id, callback){
+    global.database.collection(customerCollection).find(new objectId(id)).toArray(callback)
+}
+
 function insertCliente(cliente, callback){
     global.database.collection(customerCollection).insert(cliente, callback)
 }
 
-function updateCliente(cliente, callback){
-    global.database.collection(customerCollection).update({_id: objectId(cliente._id)}, cliente, callback)
+function updateCliente(id, cliente, callback){
+    global.database.collection(customerCollection).updateOne({_id: new objectId(id)}, cliente, callback)
 }
 
 function deleteCliente(id, callback){
-    global.database.collection(customerCollection).remove({_id: objectId(id)})
+    global.database.collection(customerCollection).deleteOne({_id: objectId(id)}, callback)
 }
 
-module.exports = { conectar, getClientes, insertCliente, updateCliente, deleteCliente }
+module.exports = {
+      conectar
+    , getClientes
+    , getOneCliente
+    , insertCliente
+    , updateCliente
+    , deleteCliente 
+}
