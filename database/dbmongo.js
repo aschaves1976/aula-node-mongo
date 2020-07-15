@@ -54,11 +54,26 @@ function deleteCliente(id, callback){
     global.database.collection(customerCollection).deleteOne({_id: objectId(id)}, callback)
 }
 
+function cntAll(callback){
+    /**
+     * Responsável por contar a quantidade de registros na coleção
+     * O parâmetro callback deve retornar erro (opcional) e a quanti
+     * dade de documentos na coleção.
+     * 
+     * Utilizando esta função será possível apresentar para o usuário
+     * quantas páginas existem para consulta, neste caso, de clientes
+     */
+    global.database.collection(customerCollection).count(callback)
+}
+
+/* A constante de tamanho da pagina agora está sendo exportada, também*/
 module.exports = {
       conectar
     , getClientes
     , getOneCliente
     , insertCliente
     , updateCliente
-    , deleteCliente 
+    , deleteCliente
+    , cntAll
+    , tamanho_pagina
 }

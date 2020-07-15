@@ -88,16 +88,30 @@ router.get('/:pagina?', function(req, res, next) {
    * Se o parâmetro for omitido, então, o valor será 1 (constante page)
    */
   const page = parseInt(req.params.pagina || '1')
+
   mongodb.getClientes(page,
     function(err, docs){
       if(err){
-        res.render('index', { title: 'ERROR', clientes: [] });
+        res.render('index', { title: 'ERROR', clientes: [] })
       }else{
-        res.render('index', { title: 'Express', clientes: docs });
+        /**
+         * Utilizando a função Count garatimos que a página será
+         * renderizada, somente, quando tivermos tanto os documentos
+         * da consulta quanto a quantidade total de documentos na cole
+         * ção
+         */
+        mongodb.cntAll((err, counter) =>{
+          if(err){
+            console.log(`ERROR: Não foi possível determinar a quantidade de documentos na coleção. - ${err}`)
+          }else{
+            const qtdPages = Math.ceil(counter / mongodb.tamanho_pagina)
+            res.render('index', { title: 'Express', clientes: docs, counter, qtdPages, page })
+          }
+        })
       }
       
     }
   )  
-});
+})
 
 module.exports = router;

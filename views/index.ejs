@@ -31,8 +31,22 @@
         })  %>
 
       </table>
-    <p></p>
+      
+    <p>
+      <% for(let i= 1; i <= qtdPages; i++){
+        if( i !== page){
+      %>
+        <a href="/<%= i %>"> <%= i %> | </a>
+        <%}else{%>
+        <%= i %> |
+      <% } } %>
+    </p>
+
     <hr />
+
+    <p><%= counter %> Clientes encontrados!</p>
+
+    <p></p>
     <a href="/new">Cadastrar Novo Cliente</a>
   </body>
 </html>
