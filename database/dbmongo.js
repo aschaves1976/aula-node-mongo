@@ -1,4 +1,5 @@
 const mongoClient = require('mongodb').MongoClient
+
 /** 
  * objectId sera utilizado para converter os "_id" retornados
  * da URL, pois estes virao como string e o Mongo não reconhece
@@ -9,6 +10,7 @@ const objectId = require('mongodb').ObjectId
 const url = 'mongodb://localhost:27017'
 const dbName = 'aula_mongo01'
 const customerCollection = 'clientes' // customer collection
+const tamanho_pagina = 10 // determinar total de resultados por pagina
 
 function conectar (callback){
     mongoClient.connect(url)
@@ -20,8 +22,20 @@ function conectar (callback){
     
 }
 
-function getClientes(callback){
-    global.database.collection(customerCollection).find({}).toArray(callback)
+function getClientes(page, callback){
+    /**
+     * Parametro page utilizado para calcular o skip, ou seja, quantos
+     * elementos da consulta serão ignorados.
+     * Se a página for a primeira, serão apresentados até 10 elementos.
+     * Se for a segunda página, serão apresentados mais 10, a partir da 11ª
+     * posição e assim por diante.
+     */
+    const tamanhoSkip = tamanho_pagina * (page - 1)
+    global.database.collection(customerCollection)
+    .find({})
+    .skip(tamanhoSkip)
+    .limit(tamanho_pagina)
+    .toArray(callback)
 }
 
 function getOneCliente(id, callback){

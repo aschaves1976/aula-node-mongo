@@ -3,21 +3,6 @@ var router = express.Router();
 
 const mongodb = require('../database/dbmongo')
 
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  mongodb.getClientes(
-    function(err, docs){
-      if(err){
-        res.render('index', { title: 'ERROR', clientes: [] });
-      }else{
-        res.render('index', { title: 'Express', clientes: docs });
-      }
-      
-    }
-  )  
-});
-
 /* GET - Tela de Novo Cadastro*/
 router.get('/new', function(req, res, next){
   res.render('new', { title: 'Novo Cadastro', doc:{"nome":"", "idade":"", "cidade":""}, action: "/new" })
@@ -82,5 +67,37 @@ router.get('/delete/:id', function(request, response, next){
     }
   })
 })
+
+
+/* */
+/**
+ *  GET home page.
+ * 
+ * Esta rota foi movida para o final das demais rotas por causa da
+ * inclusão da paginação.
+ * 
+ * Motivo: As rotas são testadas da primeira até a última para ver
+ * qual que processará a requisição, assim está rota foi movida para
+ * o final do arquivo para que a mesma não interfira nas demais avali
+ * ações
+ */
+router.get('/:pagina?', function(req, res, next) {
+  /**
+   * Parametro pagina adicionado para fazer paginação de resultados;
+   * Parâmetro opcional (?)
+   * Se o parâmetro for omitido, então, o valor será 1 (constante page)
+   */
+  const page = parseInt(req.params.pagina || '1')
+  mongodb.getClientes(page,
+    function(err, docs){
+      if(err){
+        res.render('index', { title: 'ERROR', clientes: [] });
+      }else{
+        res.render('index', { title: 'Express', clientes: docs });
+      }
+      
+    }
+  )  
+});
 
 module.exports = router;
