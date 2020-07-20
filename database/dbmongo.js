@@ -7,7 +7,9 @@ const mongoClient = require('mongodb').MongoClient
 */
 const objectId = require('mongodb').ObjectId
 
-const url = 'mongodb://localhost:27017'
+// const url = 'mongodb://localhost:27017'
+// Utilizando a variavel de ambiente criada no ".env"
+const url = process.env.MONGO_CONNECTION
 const dbName = 'aula_mongo01'
 const customerCollection = 'clientes' // customer collection
 const tamanho_pagina = 10 // determinar total de resultados por pagina

@@ -4,6 +4,9 @@
  * Module dependencies.
  */
 
+// Garantindo que a aplicação só inicie se houver as variáveis de ambiente
+ require('dotenv-safe').config()
+
 var app = require('../app');
 var debug = require('debug')('aula-node-mongo:server');
 var http = require('http');
