@@ -4,12 +4,18 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
+var indexRouter = require('./routes');
 var usersRouter = require('./routes/users');
+const clientesRouter = require('./routes/customers')
 
 var app = express();
 
-// view engine setup
+// view engine setup 
+/**
+ * mesmo que os módulos sejam WebApi's, mantenha a view engine.
+ * pode ser que você precise de uma tela web para verificar os dados,
+ * por exemplo.
+ */
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -21,6 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/customers', clientesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

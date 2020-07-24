@@ -19,3 +19,7 @@ Em seguida entrar no diretório do projeto e executar o comando **npm install** 
 O arquivo **database/dbmongo.js** está sendo utilizado para centralizar todo o acesso a dados. Um módulo somente para lidar com banco de dados.
 Dentro deste arquivo está criado um objeto para acessar a biblioteca do MongoClient. Apartir deste acesso será possível se conectar ao banco de dados criado (**aula_mongo01**) no MongoDB.
 A função **getClientes** lista todos os registros existentes na coleção **clientes**, criada no banco de dados **aula_mongo01**.
+
+## Dica
+- **WebApi** - Mesmo que não tenha retorno gráfico para o usuário final,
+sempre que possível mantenha a view engine no app.js. Assim, caso você precise de uma página HTML, para por exemplo, fazer uma documentação, o setup da view engine já existe no seu módulo.

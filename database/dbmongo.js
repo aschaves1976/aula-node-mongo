@@ -40,6 +40,13 @@ function getClientes(page, callback){
     .toArray(callback)
 }
 
+function getCustomers(callback){
+    global.database.collection(customerCollection)
+    .find({})
+    .toArray(callback)
+}
+
+
 function getOneCliente(id, callback){
     global.database.collection(customerCollection).find(new objectId(id)).toArray(callback)
 }
@@ -78,4 +85,5 @@ module.exports = {
     , deleteCliente
     , cntAll
     , tamanho_pagina
+    , getCustomers
 }
